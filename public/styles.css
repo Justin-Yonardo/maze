@@ -1,0 +1,32 @@
+:root {
+  color-scheme: dark;
+  --ink: #d9f8df;
+  --muted: #83a58a;
+  --lime: #c7ff67;
+  --glass: rgba(5, 20, 14, 0.56);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* { box-sizing: border-box; }
+html, body, #app { width: 100%; height: 100%; margin: 0; overflow: hidden; background: #07100d; }
+button { font: inherit; }
+#scene { position: fixed; inset: 0; width: 100%; height: 100%; cursor: grab; touch-action: none; }
+#scene:active { cursor: grabbing; }
+.minimap-shell, .joystick { position: fixed; z-index: 2; }
+.minimap-shell { right: max(1.15rem, env(safe-area-inset-right)); bottom: max(1.15rem, env(safe-area-inset-bottom)); width: 156px; height: 156px; padding: .45rem; background: rgba(4, 18, 12, .72); border: 1px solid rgba(199, 255, 103, .35); box-shadow: 0 0 35px rgba(120, 255, 135, .07); }
+#minimap { width: 100%; height: 100%; image-rendering: pixelated; }
+#crosshair { position: fixed; z-index: 1; top: 50%; left: 50%; width: 18px; height: 18px; transform: translate(-50%, -50%); opacity: .65; pointer-events: none; }
+#crosshair i { position: absolute; background: var(--lime); }
+#crosshair i:nth-child(1), #crosshair i:nth-child(2) { width: 4px; height: 1px; left: 7px; }
+#crosshair i:nth-child(1) { top: 0; } #crosshair i:nth-child(2) { bottom: 0; }
+#crosshair i:nth-child(3), #crosshair i:nth-child(4) { height: 4px; width: 1px; top: 7px; }
+#crosshair i:nth-child(3) { left: 0; } #crosshair i:nth-child(4) { right: 0; }
+.joystick { left: max(1.25rem, env(safe-area-inset-left)); bottom: max(1.35rem, env(safe-area-inset-bottom)); display: none; }
+.joystick-ring { width: 102px; height: 102px; border: 1px solid rgba(217, 248, 223, .28); border-radius: 50%; background: rgba(4, 18, 12, .32); touch-action: none; }
+.joystick-stick { position: relative; top: 31px; left: 31px; width: 38px; height: 38px; border-radius: 50%; border: 1px solid var(--lime); background: rgba(199, 255, 103, .15); }
+@media (pointer: coarse) {
+  .joystick { display: block; }
+}
+@media (max-width: 440px) {
+  .minimap-shell { width: 125px; height: 125px; }
+}

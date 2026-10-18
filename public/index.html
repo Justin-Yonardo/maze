@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#08120f" />
+    <title>遥感迷宫 / SENSOR MAZE</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main id="app">
+      <canvas id="scene" aria-label="3D 无尽迷宫"></canvas>
+
+      <section class="minimap-shell" aria-label="迷宫小地图">
+        <canvas id="minimap" width="220" height="220"></canvas>
+      </section>
+
+      <div id="crosshair" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+
+      <div id="joystick" class="joystick" aria-label="移动控制器">
+        <div class="joystick-ring"><div id="stick" class="joystick-stick"></div></div>
+      </div>
+    </main>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js"
+        }
+      }
+    </script>
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
