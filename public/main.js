@@ -20,6 +20,10 @@ let sensorYaw = null;
 let sensorPitch = 0;
 let useSensor = false;
 let sensorRequested = false;
+let sensorAlpha = null;
+let sensorBeta = null;
+let sensorBaseYaw = 0;
+let sensorBasePitch = 0;
 let joystickVector = { x: 0, y: 0 };
 let dragging = false;
 let lastPointer = null;
@@ -238,6 +242,10 @@ async function enableSensor() {
       if (permission !== "granted") throw new Error("设备方向权限未授予");
     }
     sensorRequested = true;
+    sensorAlpha = null;
+    sensorBeta = null;
+    sensorBaseYaw = yaw;
+    sensorBasePitch = pitch;
   } catch (error) {
     console.warn("Device orientation permission was not granted.", error);
   }
@@ -246,9 +254,16 @@ async function enableSensor() {
 addEventListener("deviceorientation", (event) => {
   if (!sensorRequested || event.alpha === null) return;
   useSensor = true;
-  if (sensorYaw === null) sensorYaw = yaw - THREE.MathUtils.degToRad(event.alpha);
-  sensorYaw = yaw - THREE.MathUtils.degToRad(event.alpha);
-  sensorPitch = Math.max(-1.05, Math.min(.8, THREE.MathUtils.degToRad(event.beta || 0) - Math.PI / 2));
+  if (sensorAlpha === null) {
+    sensorAlpha = event.alpha;
+    sensorBeta = event.beta || 0;
+    sensorYaw = sensorBaseYaw;
+    sensorPitch = sensorBasePitch;
+    return;
+  }
+  const yawDelta = THREE.MathUtils.euclideanModulo(THREE.MathUtils.degToRad(event.alpha - sensorAlpha) + Math.PI, Math.PI * 2) - Math.PI;
+  sensorYaw = sensorBaseYaw + yawDelta;
+  sensorPitch = Math.max(-1.05, Math.min(.8, sensorBasePitch - THREE.MathUtils.degToRad((event.beta || 0) - sensorBeta)));
 });
 placePlayerAtOpenCell();
 updateChunks();
